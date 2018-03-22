@@ -1,20 +1,45 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container">
+  <header class="mb-4">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">
+          <!-- Avec l'expression {{ }} j'affiche
+           le contenu de la variable dans l'app. -->
+          {{ title }}
+        </a>
+      </div>
+    </nav>
+  </header>
+  <div class="row">
+    <div class="col-sm-4">
+      <ul class="list-group">
+        <a *ngFor="let contact of mesContacts"
+            (click)="choisirContact(contact)"
+            [class.active]="contact === contactActif"
+            href="javascript:void(0)"
+            class="list-group-item list-group-item-action">
+          {{ contact.name }}
+        </a>
+      </ul>
+    </div>
+    <div class="col-sm-8">
+      <div class="jumbotron" *ngIf="contactActif">
+        <h1 class="display-4">{{ contactActif.name }}</h1>
+        <p class="lead">{{ contactActif.username }}</p>
+        <hr class="my-4">
+        <input type="text" class="form-control"
+          [(ngModel)]="contactActif.name">
+      </div>
+      <div class="jumbotron" *ngIf="!contactActif">
+        <h1 class="display-4">Bienvenue !</h1>
+        <p class="lead">Choisis un Contact...</p>
+      </div>
+    </div>
+  </div>
+  <pre>
+    <!--{{ mesContacts | json }}-->
+  </pre>
+  <footer class="text-center">
+    Copyright &copy; 2018 - Bordeaux Philomathique.
+  </footer>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
