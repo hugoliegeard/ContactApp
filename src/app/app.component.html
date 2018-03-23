@@ -12,28 +12,21 @@
   </header>
   <div class="row">
     <div class="col-sm-4">
-      <ul class="list-group">
-        <a *ngFor="let contact of mesContacts"
-            (click)="choisirContact(contact)"
-            [class.active]="contact === contactActif"
-            href="javascript:void(0)"
-            class="list-group-item list-group-item-action">
-          {{ contact.name }}
-        </a>
-      </ul>
+      <div>
+        <ul class="list-group">
+          <a *ngFor="let contact of mesContacts"
+              (click)="choisirContact(contact)"
+              [class.active]="contact === contactActif"
+              href="javascript:void(0)"
+              class="list-group-item list-group-item-action">
+            {{ contact.name }}
+          </a>
+        </ul>
+      </div>
+      <app-ajouter (unContactEstCree)="ajouterContactDansListe($event)"></app-ajouter>
     </div>
     <div class="col-sm-8">
-      <div class="jumbotron" *ngIf="contactActif">
-        <h1 class="display-4">{{ contactActif.name }}</h1>
-        <p class="lead">{{ contactActif.username }}</p>
-        <hr class="my-4">
-        <input type="text" class="form-control"
-          [(ngModel)]="contactActif.name">
-      </div>
-      <div class="jumbotron" *ngIf="!contactActif">
-        <h1 class="display-4">Bienvenue !</h1>
-        <p class="lead">Choisis un Contact...</p>
-      </div>
+      <app-profil [contact]="contactActif"></app-profil>
     </div>
   </div>
   <pre>

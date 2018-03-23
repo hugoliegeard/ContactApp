@@ -3,18 +3,9 @@
  * notre application, on importe "Component"
  * via @angular/core
  */
-import { Component } from '@angular/core';
-
-class Contact {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address?: object;
-  phone?: number;
-  website?: string;
-  company?: object;
-}
+import {Component, OnInit} from '@angular/core';
+import {Contact} from './models/contact';
+import {UserApiService} from './services/user-api.service';
 
 /**
  * @Component est ce qu'on appelle un décorateur
@@ -56,7 +47,9 @@ class Contact {
  * Dans notre contexte MVVM, notre classe
  * correspond au ViewModel.
  */
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private userApiService: UserApiService) {}
 
   // -- Déclaration d'une Variable Titre
   title = 'Gestion de mes Contacts';
@@ -99,6 +92,15 @@ export class AppComponent {
     },
   ];
 
+  ngOnInit(): void {
+    this.userApiService.getContacts().subscribe(
+      contacts => {
+        console.log(contacts);
+        this.mesContacts = contacts;
+      }
+    );
+  }
+
   /**
    * Ma fonction choisirContact, prend un contact
    * en paramètre et le transmet à la variable
@@ -108,5 +110,25 @@ export class AppComponent {
   choisirContact(contactCliqueParMonUtilisateur) {
     this.contactActif = contactCliqueParMonUtilisateur;
     console.log(this.contactActif);
+  }
+
+  /**
+   * Fonction qui permet de rajouter
+   * un nouveau contact dans la liste.
+   * @param event
+   */
+  ajouterContactDansListe(event: any) {
+    // -- Aperçu dans la Console
+    console.log(event);
+
+    // -- Récupération du Contact via l'Evenement
+    const leContact: Contact = event.leContact;
+
+    // -- Attribution d'un ID au Contact
+    let id: number = this.mesContacts.length;
+    leContact.id = id += 1;
+
+    // -- Ajout du Contact dans le Tableau
+    this.mesContacts.push(leContact);
   }
 }
