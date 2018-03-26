@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Contact} from '../models/contact';
 
 @Component({
@@ -9,10 +9,14 @@ import {Contact} from '../models/contact';
 export class ProfilComponent implements OnInit {
 
   @Input() contact: Contact;
+  @Output() userhasbeenchanged = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  userHasBeenChanged() {
+    this.userhasbeenchanged.emit();
+  }
 }

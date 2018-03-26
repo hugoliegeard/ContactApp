@@ -6,6 +6,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Contact} from './models/contact';
 import {UserApiService} from './services/user-api.service';
+import {UserStorageService} from './services/user-storage.service';
 
 /**
  * @Component est ce qu'on appelle un décorateur
@@ -49,7 +50,8 @@ import {UserApiService} from './services/user-api.service';
  */
 export class AppComponent implements OnInit {
 
-  constructor(private userApiService: UserApiService) {}
+  constructor(private userApiService: UserApiService,
+              private userStorageService: UserStorageService) {}
 
   // -- Déclaration d'une Variable Titre
   title = 'Gestion de mes Contacts';
@@ -93,12 +95,20 @@ export class AppComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.userApiService.getContacts().subscribe(
+    /**
+     * Récupération des contacts depuis l'API.
+     */
+    /*this.userApiService.getContacts().subscribe(
       contacts => {
         console.log(contacts);
         this.mesContacts = contacts;
       }
-    );
+    );*/
+    /**
+     * Au chargement de l'application, je récupère
+     * les contacts du localStorage.
+     */
+    this.mesContacts = this.userStorageService.getContacts();
   }
 
   /**
@@ -130,5 +140,15 @@ export class AppComponent implements OnInit {
 
     // -- Ajout du Contact dans le Tableau
     this.mesContacts.push(leContact);
+
+    // -- On sauvegarde les Contacts
+    this.saveContacts();
+  }
+
+  /**
+   * Déclenche la sauvegarde des contacts.
+   */
+  saveContacts() {
+    this.userStorageService.save(this.mesContacts);
   }
 }

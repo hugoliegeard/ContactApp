@@ -3,6 +3,7 @@
   <p class="lead">{{ contact.username }}</p>
   <hr class="my-4">
   <input type="text" class="form-control"
+         (change)="userHasBeenChanged()"
          [(ngModel)]="contact.name">
 </div>
 <div class="jumbotron" *ngIf="!contact">
